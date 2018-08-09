@@ -5,8 +5,30 @@
  * pins available A2-A5
  */
 
+//LCD PINS
+#define RS 2
+#define EN 4
+#define D4 5
+#define D5 6
+#define D6 7
+#define D7 8
 
-LiquidCrystal lcd(2,4,5,6,7,8); // the pins we use on the LCD
+//KEYPAD PINS
+#define ROW0 9
+#define ROW1 10
+#define ROW2 11
+#define ROW3 12
+#define COL0 13
+#define COL1 A0
+#define COL3 A1
+
+//INTERACTION PINS
+#define speaker 3
+#define button1 A6
+#define button2 A7
+
+
+LiquidCrystal lcd(RS,EN,D4,D5,D6,D7); // the pins we use on the LCD
 
 const byte ROWS = 4; //four rows
 const byte COLS = 3; //three columns
@@ -16,8 +38,8 @@ char keys[ROWS][COLS] = {
   {'7','8','9'},
   {'*','0','#'}
 };
-byte rowPins[ROWS] = {9, 10, 11,12}; //connect to the row pinouts of the keypad
-byte colPins[COLS] = {13, A0,A1}; //connect to the column pinouts of the keypad
+byte rowPins[ROWS] = {ROW0, ROW1, ROW2, ROW3}; //connect to the row pinouts of the keypad
+byte colPins[COLS] = {COL0, COL1, COL2}; //connect to the column pinouts of the keypad
 
 Keypad key_pad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
 
@@ -36,17 +58,13 @@ int tempo_mil=0;
 char code[3];
 char pass[3];
 
-
-int speaker=3;
-int button1=A6;
-int button2=A7;
-
 void setup(){
   Serial.begin(9600);
 
+
   lcd.begin(16, 1);
 
-  pinMode(button1, INPUT);
+  pinMode(1, INPUT); //unknown connection
   pinMode(button2, INPUT);
   pinMode(speaker, OUTPUT);
 }
@@ -56,13 +74,59 @@ void loop(){
   
 }
 
+void write_pos(int x, int y, string text){
+  
+}
 
 
 void set_code(){
+  bool repeat=false;
   
+  do{
+    lcd.clear();
+    lcd.setCursor(0,0);
+    
+    for(int i=0;i<=3;i++){
+      lcd.setCursor(i,1);
+      lcd.cursor();
+      code[i]= key_pad.getKey(); 
+      while(code[i]==NULL){
+        code[i]= key_pad.getKey(); 
+      }
+      lcd.print(code[i]); //show keys as they are inputted
+    }
+    
+    
+    lcd.noCursor();
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("Code=");
+    lcd.print(code[0]);
+    lcd.print(code[1]);
+    lcd.print(code[2]);
+    lcd.print(code[3]);
+    
+    lcd.setCursor(0,1);
+    lcd.print("1=YES");
+    lcd.setCursor(11,1)
+    lcd.print("X=NO");
+    
+    
+    
+    char buff= key_pad.getKey(); 
+    while(buff==NULL){
+      code[i]= key_pad.getKey(); 
+    }
+    
+    if(buff!='1'){
+      repeat=true;
+    }
+    
+
+    
+  }while(repeat);
   
-  bool repeat=true;
-  
+  /*
   while(repeat){
 
     lcd.clear();
@@ -96,14 +160,14 @@ void set_code(){
     if(buff=='1'){
       repeat=false;
     }
-  }
+  }*/
   
 }
 
 
 void set_timer(){
   
-  bool set_time=true;
+  bool set_time=false;
   
   while(set_time){
 
