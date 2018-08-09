@@ -43,12 +43,16 @@ Keypad key_pad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);
 
 int game_mode = 0;
 
-//change to use Time
+//change to use Time maybe
 int hours = 0;
 int mins = 0;
 int secs = 0;
 
-int tempo_mil = 0;
+int max_hours=0;
+int max_mins=0;
+int max_secs=0;
+
+int time_secs = 0;
 
 char code[3];
 char pass[3];
@@ -106,7 +110,7 @@ void set_code()
         char buff = key_pad.getKey();
         while (buff == NULL)
         {
-            code[i] = key_pad.getKey();
+            buff = key_pad.getKey();
         }
 
         if (buff != '1')
@@ -157,10 +161,80 @@ void set_timer()
 
     bool set_time = false;
 
-    while (set_time)
+    do
     {
 
         lcd.clear();
+        lcd.setCursor(0, 0);
+
+        //bool repeat = true;
+        char buffer[1];
+        string names[3] = {"Horas", "Mins", "Secs"};
+
+        for (int i = 0; i <= 3; i++)
+        {
+            bool repeat = false;
+
+            do
+            {
+                lcd.clear();
+                lcd.setCursor(0, 0);
+                lcd.print("Insira ");
+                lcd.print(names[i]);
+                lcd.print(": ");
+
+                for (int x = 0; i <= 1; i++)
+                {
+                    buffer[x] = key_pad.getKey();
+                    while (buff == NO_KEY)
+                    {
+                        buffer[x] = key_pad.getKey();
+                    }
+                    if (i == 0 && buff > '5')
+                    {
+                        buffer[x] = '5';
+                    }
+                }
+
+                lcd.clear();
+                lcd.setCursor(0, 0);
+                lcd.print(names[i]);
+                lcd.print("=");
+                lcd.print(buffer[0]);
+                lcd.print(buffer[1]);
+
+                lcd.setCursor(0, 1);
+                lcd.print("1=YES");
+                lcd.setCursor(11, 1)
+                lcd.print("X=NO");
+
+                char buff = key_pad.getKey();
+                while (buff == NULL)
+                {
+                    buff = key_pad.getKey();
+                }
+                if (buff != '1')
+                {
+                    repeat = true;
+                }
+
+            } while (repeat);
+        }
+
+    } while (set_time);
+}
+
+/*
+void set_timer()
+{
+
+    bool set_time = false;
+
+    do
+    {
+
+        lcd.clear();
+        lcd.setCursor(0,0);
 
         bool repeat = true;
         int storage[1];
@@ -323,8 +397,8 @@ void set_timer()
                 repeat = false;
             }
         }
-    }
-}
+    }while(set_time);
+}*/
 
 void menu()
 {
