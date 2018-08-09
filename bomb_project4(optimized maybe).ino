@@ -170,6 +170,7 @@ void set_timer()
         //bool repeat = true;
         char buffer[1];
         string names[3] = {"Horas", "Mins", "Secs"};
+        int times[2];
 
         for (int i = 0; i <= 3; i++)
         {
@@ -209,18 +210,20 @@ void set_timer()
                 lcd.print("X=NO");
 
                 char buff = key_pad.getKey();
-                while (buff == NULL)
-                {
+                while (buff == NULL){
                     buff = key_pad.getKey();
                 }
-                if (buff != '1')
-                {
+                if (buff != '1'){
                     repeat = true;
                 }
 
             } while (repeat);
+            
+            times[i]=( (buffer[0]-'0')*10+buffer[1]-'0' ); //-'0' converts char to int, like '4' to 4
         }
-
+        
+        //show total time and confirm is correct
+        
     } while (set_time);
 }
 
