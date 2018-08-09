@@ -3,7 +3,9 @@
 
 /*
  * pins available A2-A5
+ * pin 3 free in barebone atmega328
  */
+
 
 //LCD PINS
 #define RS 2
@@ -22,7 +24,7 @@
 #define COL1 A0
 #define COL3 A1
 
-//INTERACTION PINS
+//INTERACTION PINS (change these ones to work with barebone atmega328
 #define speaker 3
 #define button1 A6
 #define button2 A7
