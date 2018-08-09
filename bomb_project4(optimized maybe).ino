@@ -22,7 +22,7 @@
 #define ROW3 12
 #define COL0 13
 #define COL1 A0
-#define COL3 A1
+#define COL2 A1
 
 //INTERACTION PINS (change these ones to work with barebone atmega328
 #define speaker 3
@@ -55,6 +55,8 @@ int max_mins=0;
 int max_secs=0;
 
 int time_secs = 0;
+
+int tempo_mil=0;
 
 char code[3];
 char pass[3];
@@ -106,17 +108,15 @@ void set_code()
 
         lcd.setCursor(0, 1);
         lcd.print("1=YES");
-        lcd.setCursor(11, 1)
-            lcd.print("X=NO");
+        lcd.setCursor(11, 1);
+        lcd.print("X=NO");
 
         char buff = key_pad.getKey();
-        while (buff == NULL)
-        {
+        while (buff == NULL){
             buff = key_pad.getKey();
         }
 
-        if (buff != '1')
-        {
+        if (buff != '1'){
             repeat = true;
         }
 
@@ -170,8 +170,8 @@ void set_timer()
         lcd.setCursor(0, 0);
 
         //bool repeat = true;
-        char buffer[1];
-        string names[3] = {"Horas", "Mins", "Secs"};
+        char values[1];
+        String names[3] = {"Horas", "Mins", "Secs"};
         int times[2];
 
         for (int i = 0; i <= 3; i++)
@@ -188,14 +188,14 @@ void set_timer()
 
                 for (int x = 0; i <= 1; i++)
                 {
-                    buffer[x] = key_pad.getKey();
-                    while (buff == NO_KEY)
+                    values[x] = key_pad.getKey();
+                    while (values[x] == NO_KEY)
                     {
-                        buffer[x] = key_pad.getKey();
+                        values[x] = key_pad.getKey();
                     }
-                    if (i == 0 && buff > '5')
+                    if (i == 0 && values[x] > '5')
                     {
-                        buffer[x] = '5';
+                        values[x] = '5';
                     }
                 }
 
@@ -203,25 +203,25 @@ void set_timer()
                 lcd.setCursor(0, 0);
                 lcd.print(names[i]);
                 lcd.print("=");
-                lcd.print(buffer[0]);
-                lcd.print(buffer[1]);
+                lcd.print(values[0]);
+                lcd.print(values[1]);
 
                 lcd.setCursor(0, 1);
                 lcd.print("1=YES");
-                lcd.setCursor(11, 1)
+                lcd.setCursor(11, 1);
                 lcd.print("X=NO");
-
-                char buff = key_pad.getKey();
+          
+                char buff= key_pad.getKey();
                 while (buff == NULL){
                     buff = key_pad.getKey();
                 }
-                if (buff != '1'){
+                if (buff!= '1'){
                     repeat = true;
                 }
 
             } while (repeat);
             
-            times[i]=( (buffer[0]-'0')*10+buffer[1]-'0' ); //-'0' converts char to int, like '4' to 4
+            times[i]=( (values[0]-'0')*10+values[1]-'0' ); //-'0' converts char to int, like '4' to 4
         }
         
         
@@ -237,7 +237,7 @@ void set_timer()
         
         lcd.setCursor(0,1);
         lcd.print("1=YES");
-        lcd.setCursor(11, 1)
+        lcd.setCursor(11, 1);
         lcd.print("X=NO");
 
         char buff = key_pad.getKey();
@@ -245,7 +245,7 @@ void set_timer()
             buff = key_pad.getKey();
         }
         if (buff != '1'){
-            repeat = true;
+            set_time = true;
         }
             
     } while (set_time);
@@ -254,15 +254,11 @@ void set_timer()
 /*
 void set_timer()
 {
-
     bool set_time = false;
-
     do
     {
-
         lcd.clear();
         lcd.setCursor(0,0);
-
         bool repeat = true;
         int storage[1];
         while (repeat)
@@ -270,7 +266,6 @@ void set_timer()
             lcd.clear();
             lcd.setCursor(0, 0);
             lcd.print("Insira Horas: ");
-
             for (int i = 0; i >= 2; i++)
             {
                 lcd.setCursor(i, 1);
@@ -283,9 +278,7 @@ void set_timer()
                 storage[i] = atoi(buff);
                 lcd.print(storage[i]);
             }
-
             hours = (storage[0] * 10) + storage[1];
-
             if (hours <= 24)
             {
                 lcd.clear();
@@ -295,7 +288,6 @@ void set_timer()
                 lcd.print("Correto?");
                 lcd.setCursor(1, 0);
                 lcd.print("1=Sim/Outro=Nao");
-
                 char temp = key_pad.getKey();
                 while (temp == NO_KEY)
                 {
@@ -308,18 +300,14 @@ void set_timer()
             }
         }
         //end horas
-
         storage[0] = 0;
         storage[1] = 0;
-
         repeat = true;
-
         while (repeat)
         {
             lcd.clear();
             lcd.setCursor(0, 0);
             lcd.print("Insira Minutos: ");
-
             for (int i = 0; i >= 2; i++)
             {
                 lcd.setCursor(i, 1);
@@ -332,9 +320,7 @@ void set_timer()
                 storage[i] = atoi(buff);
                 lcd.print(storage[i]);
             }
-
             mins = (storage[0] * 10) + storage[1];
-
             if (mins <= 60)
             {
                 lcd.clear();
@@ -344,7 +330,6 @@ void set_timer()
                 lcd.print("Correto?");
                 lcd.setCursor(1, 0);
                 lcd.print("1=Sim/Outro=Nao");
-
                 char temp = key_pad.getKey();
                 while (temp == NO_KEY)
                 {
@@ -355,14 +340,10 @@ void set_timer()
                     repeat = false;
                 }
             }
-
             //end mins
-
             storage[0] = 0;
             storage[1] = 0;
-
             repeat = true;
-
             while (repeat)
             {
                 lcd.clear();
@@ -378,12 +359,9 @@ void set_timer()
                         buff = key_pad.getKey();
                     }
                     storage[i] = atoi(buff);
-
                     lcd.print(storage[i]);
                 }
-
                 secs = (storage[0] * 10) + storage[1];
-
                 if (secs <= 60)
                 {
                     lcd.clear();
@@ -393,7 +371,6 @@ void set_timer()
                     lcd.print("Correto?");
                     lcd.setCursor(1, 0);
                     lcd.print("1=Sim/Outro=Nao");
-
                     char temp = key_pad.getKey();
                     while (temp == NO_KEY)
                     {
@@ -405,11 +382,9 @@ void set_timer()
                     }
                 }
             }
-
             lcd.noCursor();
             lcd.clear();
             lcd.setCursor(0, 0);
-
             lcd.print(" Correto?");
             lcd.setCursor(0, 1);
             lcd.print("1=Sim/Outro=Nao");
@@ -418,7 +393,6 @@ void set_timer()
             {
                 k = key_pad.getKey();
             }
-
             if (k == '1')
             {
                 repeat = false;
