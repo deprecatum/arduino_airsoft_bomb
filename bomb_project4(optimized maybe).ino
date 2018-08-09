@@ -43,6 +43,7 @@ Keypad key_pad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);
 
 int game_mode = 0;
 
+//change to use Time
 int hours = 0;
 int mins = 0;
 int secs = 0;
@@ -64,10 +65,6 @@ void setup()
 }
 
 void loop()
-{
-}
-
-void write_pos(int x, int y, string text)
 {
 }
 
