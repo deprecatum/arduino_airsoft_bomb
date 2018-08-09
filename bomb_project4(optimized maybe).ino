@@ -222,8 +222,30 @@ void set_timer()
             times[i]=( (buffer[0]-'0')*10+buffer[1]-'0' ); //-'0' converts char to int, like '4' to 4
         }
         
-        //show total time and confirm is correct
         
+        //show total time and confirm is correct
+        lcd.clear();
+        lcd.setCursor(0,0);
+        lcd.print("Time=");
+        lcd.print(times[0]);
+        lcd.print(":");
+        lcd.print(times[1]);
+        lcd.print(":");
+        lcd.print(times[2]);
+        
+        lcd.setCursor(0,1);
+        lcd.print("1=YES");
+        lcd.setCursor(11, 1)
+        lcd.print("X=NO");
+
+        char buff = key_pad.getKey();
+        while (buff == NULL){
+            buff = key_pad.getKey();
+        }
+        if (buff != '1'){
+            repeat = true;
+        }
+            
     } while (set_time);
 }
 
@@ -418,10 +440,8 @@ void menu()
             key = key_pad.getKey();
         }
 
-        switch (key)
-        {
-        case '1':
-        {
+        switch (key){
+        case '1':{
             lcd.clear();
             lcd.setCursor(0, 0);
             lcd.print("Modo bomba?");
@@ -441,8 +461,7 @@ void menu()
             break;
         }
 
-        case '2':
-        {
+        case '2':{
             lcd.clear();
             lcd.setCursor(0, 0);
             lcd.print("Modo tempo?");
