@@ -64,11 +64,6 @@ char code[4];
 char pass[4]={'x','x','x','x'};
 //^
 
-int time_secs = 0;
-
-int tempo_mil=0;
-
-
 void setup()
 {
     Serial.begin(9600);
