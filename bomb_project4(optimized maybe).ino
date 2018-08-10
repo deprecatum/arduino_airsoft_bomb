@@ -58,12 +58,16 @@ int max_secs=0;
 int current_time=0;
 int max_time=0;
 
+int gamemode=0;
+
+char code[4];
+char pass[4]={'x','x','x','x'};
+//^
+
 int time_secs = 0;
 
 int tempo_mil=0;
 
-char code[4];
-char pass[4]={'x','x','x','x'};
 
 void setup()
 {
@@ -543,7 +547,7 @@ void bomb_timer(){
     
     time_t t=now();
     while(current_time<max_time){
-        run_timer();
+        run_timer(t);
         lcd.print(hours);
         lcd.print(":");
         lcd.print(mins);
