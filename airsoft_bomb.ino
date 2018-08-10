@@ -259,7 +259,7 @@ void set_timer() //needs testing
     max_hours=times[0];
     max_mins=times[1];
     max_secs=times[2];
-    max_time=(hours*10000)*(mins*100)+secs;
+    max_time=(hours*3600)*(mins*60)+secs;
 }
 
 /* old code
@@ -603,11 +603,101 @@ void bomb_timer(){
     }//while
 }
 
+void versus_timer(){
+    lcd.clear();
+    lcd.setCursor(0,0);
+    
+    int team1_time=0;
+    int team2_time=0;
+    
+    bool team_selector=false; //true == team1
+    int previous_time=0;
+    
+    time_t t=now();
+    run_timer();
+    while(current_time<max_time){
+        previous_time=current_time;
+        run_timer();
+        if(){ //button1 pressed
+            team_selector=false;
+        }else if(){ //button2 pressed
+            team_selector=true;
+        }
+        
+        if(team_selector){
+            team1_time+=current_time-previous_time;
+        }else{
+            team2_time+=current_time-previous_time;
+        }
+    }
+    
+    if(team1_time>time2_time){
+        lcd.clear();
+        lcd.setCursor(0,0);
+        lcd.print("TEAM 1 WON!");
+        
+        lcd.setCursor(0,1);
+        lcd.print("Reset Device");
+        
+        char buff=key_pad.getKey();
+        while(buff==NULL){
+        }
+    }else{
+        lcd.clear();
+        lcd.setCursor(0,0);
+        lcd.print("TEAM 2 WON!");
+        
+        lcd.setCursor(0,1);
+        lcd.print("Reset Device");
+        
+        char buff=key_pad.getKey();
+        while(buff==NULL){
+        }
+    }
+    
+    int hh;
+    int mm;
+    int ss;
+    
+    ss=team1_time%60;
+    mm=((team1_time-ss)/60)%60; 
+    hh=(team1_time-((bb*60)+aa))/3600;
+    
+    
+    lcd.clear();
+    
+    lcd.setCursor(0,0);
+    lcd.print("TEAM1:");
+    lcd.print(ss);
+    lcd.print(";");
+    lcd.print(mm);
+    lcd.print(";");
+    lcd.print(hh);
+    
+    
+    ss=team2_time%60;
+    mm=((team2_time-ss)/60)%60; 
+    hh=(team2_time-((bb*60)+aa))/3600;
+    
+    lcd.setCursor(0,1);
+    lcd.print("TEAM2:");
+    lcd.print(ss);
+    lcd.print(";");
+    lcd.print(mm);
+    lcd.print(";");
+    lcd.print(hh);
+    
+    
+    while(1){
+        delay(1000);// play some tune
+    }
+}
+
 void run_timer(time_t t){
     secs=second(t);
     mins=minute(t);
     hours=hour(t);
-    current_time=(hours*10000)+(mins*100)+secs;
+    current_time=(hours*3600)+(mins*60)+secs;
 }
 
 
@@ -651,7 +741,7 @@ void countdown()
         prev_mil = millis();
 
         while (tempo_mil > 0)
-        {
+        {17220
 
             current_mil = millis();
             tempo_mil = tempo_mil - (current_mil - prev_mil);
