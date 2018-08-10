@@ -35,7 +35,6 @@ char pass[3];
 int speaker=3;
 int button1=A6;
 int button2=A7;
-
 void setup(){
   
   
