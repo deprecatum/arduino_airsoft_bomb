@@ -76,7 +76,7 @@ void loop()
 {
 }
 
-void set_code()
+void set_code() //done, needs testing
 {
     bool repeat = false;
 
@@ -122,7 +122,7 @@ void set_code()
 
     } while (repeat);
 
-    /*
+    /* old code
   while(repeat){
     lcd.clear();
     lcd.setCursor(0,0);
@@ -158,7 +158,7 @@ void set_code()
   }*/
 }
 
-void set_timer()
+void set_timer() //needs testing
 {
 
     bool set_time = false;
@@ -171,10 +171,10 @@ void set_timer()
 
         //bool repeat = true;
         char values[1];
-        String names[3] = {"Horas", "Mins", "Secs"};
+        String names[2] = {"Horas", "Mins", "Secs"};
         int times[2];
 
-        for (int i = 0; i <= 3; i++)
+        for (int i = 0; i <= 2; i++)
         {
             bool repeat = false;
 
@@ -225,7 +225,7 @@ void set_timer()
         }
         
         
-        //show total time and confirm is correct
+        //show total time and confirm if correct
         lcd.clear();
         lcd.setCursor(0,0);
         lcd.print("Time=");
@@ -251,7 +251,7 @@ void set_timer()
     } while (set_time);
 }
 
-/*
+/* old code
 void set_timer()
 {
     bool set_time = false;
@@ -401,10 +401,69 @@ void set_timer()
     }while(set_time);
 }*/
 
+//needs testing
 void menu()
 {
-    bool sel_jogo = true;
+    bool sel_game = true;
 
+    do{
+        lcd.clear();
+        lcd.setCursor(0, 0);
+        lcd.print("Select Gamemode");
+        char key = key_pad.getKey();
+        while (key == NO_KEY)
+        {
+            key = key_pad.getKey();
+        }
+        
+
+        lcd.clear();
+        lcd.setCursor(0, 0);
+        
+        switch(key){
+            case '1':{
+                lcd.print("Bomb Timer?");
+                lcd.setCursor(0,1);
+                lcd.print("1=YES");
+                lcd.setCursor(11, 1);
+                lcd.print("X=NO");
+                
+                char key = key_pad.getKey();
+                while (key == NO_KEY)
+                {
+                    key = key_pad.getKey();
+                }
+                if(key=='1'){
+                    sel_game=false;
+                    gamemode=1;
+                }
+                
+                break;
+            }
+            case '3':{
+                lcd.print("Versus Timer?");
+                lcd.setCursor(0,1);
+                lcd.print("1=YES");
+                lcd.setCursor(11, 1);
+                lcd.print("X=NO");
+                
+                char key = key_pad.getKey();
+                while (key == NO_KEY)
+                {
+                    key = key_pad.getKey();
+                }
+                if(key=='1'){
+                    sel_game=false;
+                    gamemode=2;
+                }
+                
+                break;
+            }
+        }
+        
+    }while(sel_game);
+
+    /*
     while (sel_jogo)
     {
         lcd.clear();
@@ -461,7 +520,11 @@ void menu()
         {
         }
         }
-    }
+    }*/
+}
+
+void run_timer(){
+    
 }
 
 void countdown()
