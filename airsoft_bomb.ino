@@ -485,7 +485,6 @@ void menu()
         {
             key = key_pad.getKey();
         }
-
         switch (key){
         case '1':{
             lcd.clear();
@@ -498,7 +497,6 @@ void menu()
             {
                 buff = key_pad.getKey();
             }
-
             if (buff == '1')
             {
                 sel_jogo = false;
@@ -506,7 +504,6 @@ void menu()
             }
             break;
         }
-
         case '2':{
             lcd.clear();
             lcd.setCursor(0, 0);
@@ -518,7 +515,6 @@ void menu()
             {
                 buff = key_pad.getKey();
             }
-
             if (buff == '1')
             {
                 sel_jogo = false;
@@ -526,7 +522,6 @@ void menu()
             }
             break;
         }
-
         default:
         {
         }
@@ -710,7 +705,6 @@ void countdown()
     int ss;
     int prev_mil;
     int current_mil;
-
     switch (game_mode)
     {
     case 1:
@@ -728,21 +722,16 @@ void countdown()
         lcd.print(":");
         lcd.print(secs);
         delay(2000);
-
         int pass_count = 0;
         int tries = 3;
         bool correto = false;
-
         pass[0] = ' ';
         pass[1] = ' ';
         pass[2] = ' ';
         pass[3] = ' ';
-
         prev_mil = millis();
-
         while (tempo_mil > 0)
         {17220
-
             current_mil = millis();
             tempo_mil = tempo_mil - (current_mil - prev_mil);
             prev_mil = current_mil;
@@ -757,26 +746,19 @@ void countdown()
             lcd.print(mm);
             lcd.print(":");
             lcd.print(ss);
-
             char buff = key_pad.getKey();
-
             if (buff != NO_KEY)
             {
-
                 lcd.setCursor(1, 0);
-
                 pass[pass_count] = buff;
                 for (int i = 0; i >= 4; i++)
                 {
                     lcd.print(pass[i]);
                 }
-
                 pass_count++;
-
                 if (pass_count >= 4)
                 {
                     pass_count = 0;
-
                     if ((pass[0] == code[0]) && (pass[1] == code[1]) && (pass[2] == code[2]) && (pass[3] == code[3]))
                     {
                         tempo_mil = 0;
@@ -805,12 +787,10 @@ void countdown()
                                 wait = false;
                             }
                         }
-
                         delay(10000);
                     }
                     else
                     {
-
                         pass[0] = ' ';
                         pass[1] = ' ';
                         pass[2] = ' ';
@@ -845,7 +825,6 @@ void countdown()
                 }
             }
         }
-
         break;
     }
     case 2:
@@ -860,7 +839,6 @@ void countdown()
         lcd.print(mins);
         lcd.print(":");
         lcd.print(secs);
-
         int half = tempo_mil / 2;
         int time1 = 0;
         int time2 = 0;
@@ -874,16 +852,12 @@ void countdown()
                 equipa2 = digitalRead(button2);
             }
         }
-
         delay(1000);
-
         prev_mil = millis();
         while (tempo_mil > 0)
         {
-
             current_mil = millis();
             tempo_mil = current_mil - prev_mil;
-
             ss = (tempo_mil * 1000) % 60;
             mm = (((tempo_mil * 1000) - ss) / 60) % 60;
             hh = ((((tempo_mil * 1000) - ss) / 60) - mm) / 60;
@@ -893,7 +867,6 @@ void countdown()
             lcd.print(mm);
             lcd.print(":");
             lcd.print(ss);
-
             if (equipa1)
             {
                 time1 = time1 + (current_mil - prev_mil);
@@ -919,7 +892,6 @@ void countdown()
             int s = (time1 * 1000) % 60;
             int m = (((time1 * 1000) - s) / 60) % 60;
             int h = ((((time1 * 1000) - s) / 60) - m) / 60;
-
             bool wait = true;
             while (wait)
             {
@@ -935,9 +907,7 @@ void countdown()
                     wait = false;
                 }
             }
-
             delay(10000);
-
             //equipa 1 ganha
         }
         else
@@ -950,7 +920,6 @@ void countdown()
             int s = (time2 * 1000) % 60;
             int m = (((time2 * 1000) - s) / 60) % 60;
             int h = ((((time2 * 1000) - s) / 60) - m) / 60;
-
             bool wait = true;
             while (wait)
             {
@@ -966,10 +935,8 @@ void countdown()
                     wait = false;
                 }
             }
-
             delay(10000);
         }
-
         break;
     }
     default:
