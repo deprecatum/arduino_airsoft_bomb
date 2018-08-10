@@ -538,7 +538,7 @@ void bomb_timer(){
     lcd.clear();
     lcd.setCursor(0,0);
     
-    int tries=2;
+    int tries=3;
     
     time_t t=now();
     int counter=0;
@@ -574,7 +574,14 @@ void bomb_timer(){
                     }
                 }
                 if(is_equal){
-                
+                                lcd.clear();
+            lcd.setCursor(0,0);
+            lcd.print("Bomb Defused!")
+            lcd.setCursor(0,1);
+            lcd.print("Reset Device");
+            while(1){
+                delay(1000);
+            }
                 }else{
                     pass[0]='x';
                     pass[1]='x';
@@ -602,6 +609,7 @@ void run_timer(time_t t){
     hours=hour(t);
     current_time=(hours*10000)+(mins*100)+secs;
 }
+
 
 /*
 void countdown()
