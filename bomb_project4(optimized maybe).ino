@@ -63,7 +63,7 @@ int time_secs = 0;
 int tempo_mil=0;
 
 char code[3];
-char pass[3];
+char pass[3]={'x','x','x','x'};
 
 void setup()
 {
@@ -536,10 +536,28 @@ void menu()
 }
 
 void bomb_timer(){
+    lcd.clear();
+    lcd.setCursor(0,0);
+    
+    
+    
     time_t t=now();
     while(current_time<max_time){
         run_timer();
+        lcd.print(hours);
+        lcd.print(":");
+        lcd.print(mins);
+        lcd.print(":");
+        lcd.print(secs);
         //do things
+        
+        
+        lcd.setCursor(0,1);
+        lcd.print("PASS:");
+        lcd.print(pass[0]);        
+        lcd.print(pass[1]);       
+        lcd.print(pass[2]);
+        lcd.print(pass[3]);
     }
 }
 
