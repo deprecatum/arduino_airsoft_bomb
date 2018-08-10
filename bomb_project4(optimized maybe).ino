@@ -1,5 +1,6 @@
 #include <Keypad.h>
 #include <LiquidCrystal.h>
+#include <Time.h>
 
 /*
  * pins available A2-A5
@@ -53,6 +54,9 @@ int secs = 0;
 int max_hours=0;
 int max_mins=0;
 int max_secs=0;
+
+int current_time=0;
+int max_time=0;
 
 int time_secs = 0;
 
@@ -162,7 +166,8 @@ void set_timer() //needs testing
 {
 
     bool set_time = false;
-
+    int times[2];
+    
     do
     {
 
@@ -172,7 +177,7 @@ void set_timer() //needs testing
         //bool repeat = true;
         char values[1];
         String names[2] = {"Horas", "Mins", "Secs"};
-        int times[2];
+        
 
         for (int i = 0; i <= 2; i++)
         {
@@ -247,8 +252,15 @@ void set_timer() //needs testing
         if (buff != '1'){
             set_time = true;
         }
+        
+        
             
     } while (set_time);
+    
+    max_hours=times[0];
+    max_mins=times[1];
+    max_secs=times[2];
+    max_time=(hours*10000)*(mins*100)+secs;
 }
 
 /* old code
@@ -523,8 +535,19 @@ void menu()
     }*/
 }
 
-void run_timer(){
-    
+void bomb_timer(){
+    time_t t=now();
+    while(current_time<max_time){
+        run_timer();
+        //do things
+    }
+}
+
+void run_timer(time_t t){
+    secs=second(t);
+    mins=minute(t);
+    hours=hour(t);
+    current_time=(hours*10000)+(mins*100)+secs;
 }
 
 void countdown()
