@@ -62,8 +62,8 @@ int time_secs = 0;
 
 int tempo_mil=0;
 
-char code[3];
-char pass[3]={'x','x','x','x'};
+char code[4];
+char pass[4]={'x','x','x','x'};
 
 void setup()
 {
@@ -166,7 +166,7 @@ void set_timer() //needs testing
 {
 
     bool set_time = false;
-    int times[2];
+    int times[3];
     
     do
     {
@@ -175,8 +175,8 @@ void set_timer() //needs testing
         lcd.setCursor(0, 0);
 
         //bool repeat = true;
-        char values[1];
-        String names[2] = {"Horas", "Mins", "Secs"};
+        char values[2];
+        String names[3] = {"Horas", "Mins", "Secs"};
         
 
         for (int i = 0; i <= 2; i++)
@@ -568,6 +568,7 @@ void run_timer(time_t t){
     current_time=(hours*10000)+(mins*100)+secs;
 }
 
+/*
 void countdown()
 {
     tempo_mil = ((hours * 60 * 60) + (mins * 60) + secs) * 1000;
@@ -774,7 +775,7 @@ void countdown()
           //equipa1 ganha
         }else if(time2>half){
           //equipa2 ganha
-        }*/
+        }
         }
         if (time1 > time2)
         {
@@ -843,3 +844,4 @@ void countdown()
     }
     }
 }
+*/
