@@ -538,9 +538,10 @@ void bomb_timer(){
     lcd.clear();
     lcd.setCursor(0,0);
     
-    
+    int tries=2;
     
     time_t t=now();
+    int counter=0;
     while(current_time<max_time){
         run_timer(t);
         lcd.print(hours);
@@ -550,14 +551,49 @@ void bomb_timer(){
         lcd.print(secs);
         //do things
         
-        
-        lcd.setCursor(0,1);
-        lcd.print("PASS:");
-        lcd.print(pass[0]);        
-        lcd.print(pass[1]);       
+        char buff=key_pad.getKey();
+        if( (buff!=NULL)&& (buff>='0)&& (buff<='9') ){
+            pass[counter]=buff;
+            
+           lcd.setCursor(0,1);
+           lcd.print("PASS:");
+             lcd.print(pass[0]);        
+           lcd.print(pass[1]);       
         lcd.print(pass[2]);
         lcd.print(pass[3]);
-    }
+            counter++;
+        }
+         if( counter>=3){
+                bool is_equal=false;
+                for(int i=0;i<=3;i++){
+                    if(code[i]==pass[i]){
+                        is_equal=true;
+                    }else{
+                        is_equal=false;
+                        i=3;
+                    }
+                }
+                if(is_equal){
+                
+                }else{
+                    pass[0]='x';
+                    pass[1]='x';
+                    pass[2]='x';
+                    pass[3]='x';
+                    tries--;
+                }
+            }
+        if(tries==0){
+            lcd.clear();
+            lcd.setCursor(0,0);
+            lcd.print("Bomb Exploded!")
+            lcd.setCursor(0,1);
+            lcd.print("Reset Device");
+            while(1){
+                delay(1000);
+            }
+        }
+    }//while
 }
 
 void run_timer(time_t t){
